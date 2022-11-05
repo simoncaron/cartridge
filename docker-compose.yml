@@ -24,7 +24,7 @@ services:
         networks:
             - sail
         depends_on:
-            - mariadb
+            - db
             - meilisearch
     db:
         image: 'mariadb:10'

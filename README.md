@@ -33,11 +33,7 @@ Cartridge currently utilizes [Laravel Sail](https://laravel.com/docs/9.x/sail) f
 	```sh
 	git clone https://github.com/jamjnsn/cartridge.git
 	```
-2. Install Composer packages using your local Composer:
-	```sh
-	composer install
-	```
-	OR using a temporary container:
+2. Install Composer packages using a temporary container:
 	```sh
 	docker run --rm \
     -u "$(id -u):$(id -g)" \
@@ -46,7 +42,16 @@ Cartridge currently utilizes [Laravel Sail](https://laravel.com/docs/9.x/sail) f
     laravelsail/php81-composer:latest \
     composer install --ignore-platform-reqs
 	```
-3. Install Node packages
+	If you run into permission errors creating vendor folder, ensure your docker context is set to default:
+	```sh
+	docker context use default
+	```
+3. Start containers with Sail.  
+	```sh
+	alias sail="bash vendor/bin/sail"
+	sail up -d
+	```
+4. Install Node packages
 	```sh
 	sail npm i
 	```
@@ -59,16 +64,11 @@ Cartridge currently utilizes [Laravel Sail](https://laravel.com/docs/9.x/sail) f
 	TWITCH_CLIENT_ID=Your Client ID
 	TWITCH_CLIENT_SECRET=Your Client Secret
 	```
-4. Initialize application. (__Note:__ This should be run outside of the container to ensure the storage symlinks are created properly.)
+6. Initialize application.
 	```sh
 	sail artisan cart:init
 	```
-5. Start containers with Sail.  
-	```sh
-	alias sail="bash vendor/bin/sail" # Optional: add alias to your shell profile
-	sail up -d
-	```
-6. Start HMR.
+7. Start HMR.
 	```
 	sail npm run watch
 	```
